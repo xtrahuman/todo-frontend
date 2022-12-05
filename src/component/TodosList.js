@@ -9,6 +9,8 @@ class TodosList extends React.Component {
           <TodoItem
             key={todo.id}
             todo={todo}
+            category_id = {this.props.category_id}
+            updateData = {this.props.updateData}
             handleChangeProps={this.props.handleChangeProps}
             deleteTodoProps={this.props.deleteTodoProps}
             setUpdate={this.props.setUpdate}

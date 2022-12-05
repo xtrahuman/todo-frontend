@@ -15,32 +15,6 @@ class TodoContainer extends React.Component {
     };
   }
 
-  componentDidMount() {
-
-    // fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
-
-
-
-    // // fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
-    // fetch(`http://127.0.0.1:3100/categories/${id}/tasks`)
-    //   .then(response => response.json())
-    //   .then(data =>{ 
-    //     console.log(data, 'todo data')
-    //     this.setState({ todos: data })});
-    //   console.log(this.state.todos,'check')
-
-      // const temp = localStorage.getItem("todos")
-      // const loadedTodos = JSON.parse(temp)
-      // console.log(loadedTodos)
-      // if (loadedTodos) {
-      //   this.setState({
-      //     todos: loadedTodos
-      //   })
-      // }
-
-
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if(prevState.todos !== this.state.todos) {
       const temp = JSON.stringify(this.state.todos)
@@ -48,19 +22,8 @@ class TodoContainer extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   const temp = localStorage.getItem("todos")
-  //   const loadedTodos = JSON.parse(temp)
-  //   console.log(loadedTodos)
-  //   if (loadedTodos) {
-  //     this.setState({
-  //       todos: loadedTodos
-  //     })
-  //   }
-  // }
 
   getPageDetails = (id) => {
-    // fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
     fetch(`http://127.0.0.1:3100/categories/${id}/tasks`)
       .then(response => response.json())
       .then(data =>{ 
@@ -68,48 +31,6 @@ class TodoContainer extends React.Component {
         this.setState({ todos: data })});
   }
 
-  handleChange = (id) => {
-    this.setState((prevState) => ({
-      todos: prevState.todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo, completed: !todo.completed,
-          };
-        }
-        return todo;
-      }),
-    }));
-  };
-
-  delTodo = (id) => {
-    this.setState({
-      todos: [
-        ...this.state.todos.filter((todo) => todo.id !== id),
-      ],
-    });
-  };
-
-  addTodoItem = (title) => {
-    const newTodo = {
-      id: uuidv4(),
-      name: title,
-      completed: false,
-    };
-    this.setState({
-      todos: [...this.state.todos, newTodo],
-    });
-  };
-
-  setUpdate = (updatedTitle, id) => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          todo.name = updatedTitle
-        }
-        return todo
-      }),
-    })
-  }
 
   render() {
     return (

@@ -9,6 +9,7 @@ class CategoryList extends React.Component {
           <TodoCategory
             key={category.id}
             category={category}
+            getCategories= {this.props.getCategories}
             getTodoDetails={this.props.getTodoDetails}
             handleChangeProps={this.props.handleChangeProps}
             deleteTodoProps={this.props.deleteTodoProps}

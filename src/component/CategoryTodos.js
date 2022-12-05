@@ -1,12 +1,10 @@
 /* eslint-disable */
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import InputTodo from './InputTodo';
 import TodosList from './TodosList';
 import {
   useLocation,
-  useNavigate,
   useParams,
 } from 'react-router-dom';
 
@@ -19,83 +17,52 @@ class CategoryTodos extends React.Component {
   }
 
   componentDidMount() {
-    // this.getPageDetails()
     const router = this.props.router
     const id = router.params.id
     console.log(id,'id of params')
     this.props.getTodoDetails(id)
-      // const temp = localStorage.getItem("todos")
-      // const loadedTodos = JSON.parse(temp)
-      // console.log(loadedTodos)
-      // if (loadedTodos) {
-      //   this.setState({
-      //     todos: loadedTodos
-      //   })
-      // }
 
 
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.todos !== this.state.todos) {
-      const temp = JSON.stringify(this.state.todos)
-      localStorage.setItem("todos", temp)
 
-    }
+  updateData = (changedTodo, category_id, id) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(changedTodo),
+      };
 
-
+      fetch(`http://127.0.0.1:3100/categories/${category_id}/tasks/${id}`, options)
+      .then(data => {
+      if (!data.ok) {
+        throw Error(data.status);
+       }
+       return data.json();
+      }).then(() => this.props.getTodoDetails(category_id))
+      .catch(e => {
+      console.log(e);
+      });
   }
 
-  componentWillUnmount() {
-    // clearInterval(this.timerID);
 
-  }
-
-  // componentDidMount() {
-  //   const temp = localStorage.getItem("todos")
-  //   const loadedTodos = JSON.parse(temp)
-  //   console.log(loadedTodos)
-  //   if (loadedTodos) {
-  //     this.setState({
-  //       todos: loadedTodos
-  //     })
-  //   }
-  // }
 
   handleChange = (id) => {
 
     const router = this.props.router
     const category_id = router.params.id
-
-    this.props.todos.forEach((todo) => {
-      if (todo.id === id) {
+    const allTodos = this.props.todos
+    allTodos.forEach((todo,index) => {
+      if ((todo.id === id) && (index > 0 && allTodos[index-1].completed || index==0) ) {
        const changedTodo = {
           ...todo, completed: !todo.completed,
         };
 
-        const options = {
-          method: 'PUT',
-          headers: {
-          'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(changedTodo),
-          };
-    
-          fetch(`http://127.0.0.1:3100/categories/${category_id}/tasks/${id}`, options)
-          .then(data => {
-          if (!data.ok) {
-            throw Error(data.status);
-           }
-           return data.json();
-          }).then(() => this.props.getTodoDetails(id))
-          .catch(e => {
-          console.log(e);
-          });
+        this.updateData(changedTodo, category_id, id)
       }
-      // return todo;
     })
-
-    // console.log(newTodo, "checking new todo")
 
   };
 
@@ -116,7 +83,6 @@ class CategoryTodos extends React.Component {
       if (!data.ok) {
         throw Error(data.status);
        }
-      //  return data.json();
       }).then(() => this.props.getTodoDetails(category_id))
       .catch(e => {
       console.log(e);
@@ -156,7 +122,7 @@ class CategoryTodos extends React.Component {
 
   setUpdate = (updatedTitle, id) => {
     this.setState({
-      todos: this.state.todos.map(todo => {
+      todos: this.props.todos.map(todo => {
         if (todo.id === id) {
           todo.name = updatedTitle
         }
@@ -167,14 +133,18 @@ class CategoryTodos extends React.Component {
 
   render() {
     console.log(this.state)
+    const router = this.props.router
+    const category_id = router.params.id
     return (
         <>
           <InputTodo addTodoProps={this.addTodoItem} />
           <TodosList
             todos={this.props.todos}
             handleChangeProps={this.handleChange}
+            category_id = {category_id}
             deleteTodoProps={this.delTodo}
             setUpdate={this.setUpdate}
+            updateData = {this.updateData}
           />
         </>
     );
@@ -195,7 +165,6 @@ TodosList.propTypes = {
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
     const location = useLocation();
-    // const navigate = useNavigate();
     const params = useParams();
     return (
       <Component

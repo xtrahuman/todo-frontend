@@ -19,52 +19,9 @@ class Category extends React.Component {
 
 
     componentDidMount() {
-
           this.getCategories()
-          console.log("check")
-    
-          // const temp = localStorage.getItem("todos")
-          // const loadedTodos = JSON.parse(temp)
-          // console.log(this.categoryData)
-          // if (this.categoryData) {
-          //   this.setState({
-          //     categories: this.categoryData
-          //   })
-          // }
-    
     
       }
-    
-    //   componentDidUpdate(prevProps, prevState) {
-    //     if(prevState.categories!== this.state.categories) {
-    //       const temp = JSON.stringify(this.state.categories)
-    //       localStorage.setItem("todos", temp)
-    //     }
-    //   }
-    
-      // componentDidMount() {
-      //   const temp = localStorage.getItem("todos")
-      //   const loadedTodos = JSON.parse(temp)
-      //   console.log(loadedTodos)
-      //   if (loadedTodos) {
-      //     this.setState({
-      //       todos: loadedTodos
-      //     })
-      //   }
-      // }
-    
-    //   handleChange = (id) => {
-    //     this.setState((prevState) => ({
-    //       todos: prevState.todos.map((todo) => {
-    //         if (y.id === id) {
-    //           return {
-    //             ...todo, completed: !todo.completed,
-    //           };
-    //         }
-    //         return todo;
-    //       }),
-    //     }));
-    //   };
     
       delCategory = (id) => {
         const router = this.props.router
@@ -145,9 +102,9 @@ class Category extends React.Component {
               <h2>categories</h2>
               <InputCategory addCategory={this.createCategory} />
               <CategoryList 
+                getCategories= {this.props.getCategories}
                 getTodoDetails={this.props.getTodoDetails}
                 categories={this.state.categories}
-                // handleChangeProps={this.handleChange}
                 deleteTodoProps={this.delCategory }
                 setUpdate={this.setUpdate}
               />

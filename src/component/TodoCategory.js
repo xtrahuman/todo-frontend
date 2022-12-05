@@ -14,6 +14,27 @@ class TodoCategory extends React.Component {
     console.log('Cleaning up...');
   }
 
+  updateData = (changedCategory, category_id) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(changedCategory),
+      };
+
+      fetch(`http://127.0.0.1:3100/categories/${category_id}`, options)
+      .then(data => {
+      if (!data.ok) {
+        throw Error(data.status);
+       }
+       return data.json();
+      }).then(() => this.props.getCategories())
+      .catch(e => {
+      console.log(e);
+      });
+  }
+
   handleEditing = () => {
     this.setState({
       editing: true,
@@ -23,6 +44,8 @@ class TodoCategory extends React.Component {
   handleUpdatedDone = (event) => {
     if (event.key === 'Enter') {
       this.setState({ editing: false });
+      const {id} = this.props.category;
+      this.updateData(this.props.category, id)
     }
   };
 
@@ -43,23 +66,12 @@ class TodoCategory extends React.Component {
       textDecoration: 'line-through',
     };
     const {id, name } = this.props.category;
-    // const router = this.props.router
-    // const idParams = router.params.id
-    // console.log(idParams ,'id of params')
-    // const { completed, id, name } = this.props.category;
+
     return (
       <li className="item">
         <div onDoubleClick={this.handleEditing}>
-          {/* <input
-            type="checkbox"
-            className="checkbox"
-            checked={completed}
-            onChange={() => this.props.handleChangeProps(id)}
-          /> */}
           <button onClick={() => this.props.deleteTodoProps(id)}>Delete</button>
-
           <Link to={`/categories/${id}/todos`} onClick={() => this.props.getTodoDetails(id)}><span>{name}</span></Link>
-          {/* <span style={completed ? completedStyle : null}>{title}</span> */}
         </div>
         <input
           type="text"
