@@ -59,12 +59,7 @@ class TodoCategory extends React.Component {
       editMode.display = 'none';
     }
 
-    const completedStyle = {
-      fontStyle: 'italic',
-      color: '#595959',
-      opacity: 0.4,
-      textDecoration: 'line-through',
-    };
+
     const {id, name } = this.props.category;
 
     return (

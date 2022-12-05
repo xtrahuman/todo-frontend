@@ -99,7 +99,7 @@ class Category extends React.Component {
     render() {
         return (
           <div className="category_container">
-              <h2>categories</h2>
+              <h2 className='text-align-center'>categories</h2>
               <InputCategory addCategory={this.createCategory} />
               <CategoryList 
                 getCategories= {this.props.getCategories}

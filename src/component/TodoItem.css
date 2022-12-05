@@ -4,6 +4,11 @@
     padding: 17px 0px;
     border-bottom: 1px solid #eaeaea;
   }
+
+  ul {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
   
   .checkbox {
     margin-right: 15px;

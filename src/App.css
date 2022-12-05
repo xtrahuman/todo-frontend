@@ -7,13 +7,17 @@
   margin: 0 auto;
 }
 
+.text-align-center{
+  text-align: center;
+}
+
 .inner {
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
   width: 100%;
-  padding: 8rem 10px 4rem;
+  padding: 1rem 10px 1rem;
 }
 
 .form-container {

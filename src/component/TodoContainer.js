@@ -39,7 +39,7 @@ class TodoContainer extends React.Component {
         <div className="inner">
           <Header />
       <Routes>
-        <Route path="/" element={<h2>welcome, create a category to start your todo list</h2>} />
+        <Route path="/" element={<h2 className='text-align-center'>welcome, create a category to start your todo list</h2>} />
         <Route path="categories/:id/todos" element={<CategoryTodos todos={this.state.todos} getTodoDetails={this.getPageDetails} />} />
         <Route path="*" element={<NotMatch />} />
       </Routes>
