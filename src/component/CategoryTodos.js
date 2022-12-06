@@ -19,9 +19,9 @@ class CategoryTodos extends React.Component {
   componentDidMount() {
     const router = this.props.router
     const id = router.params.id
-    console.log(id,'id of params')
+    // console.log(id,'id of params')
     this.props.getTodoDetails(id)
-
+    this.props.getCategoryDetails(id)
 
   }
 
@@ -35,16 +35,16 @@ class CategoryTodos extends React.Component {
       body: JSON.stringify(changedTodo),
       };
 
-      fetch(`http://127.0.0.1:3100/categories/${category_id}/tasks/${id}`, options)
+      fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories/${category_id}/tasks/${id}`, options)
       .then(data => {
       if (!data.ok) {
         throw Error(data.status);
        }
        return data.json();
       }).then(() => this.props.getTodoDetails(category_id))
-      .catch(e => {
-      console.log(e);
-      });
+      // .catch(e => {
+      // console.log(e);
+      // });
   }
 
 
@@ -78,15 +78,15 @@ class CategoryTodos extends React.Component {
       }
       };
 
-      fetch(`http://127.0.0.1:3100/categories/${category_id}/tasks/${id}`, options)
+      fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories/${category_id}/tasks/${id}`, options)
       .then(data => {
       if (!data.ok) {
         throw Error(data.status);
        }
       }).then(() => this.props.getTodoDetails(category_id))
-      .catch(e => {
-      console.log(e);
-      });
+      // .catch(e => {
+      // console.log(e);
+      // });
   };
 
   addTodoItem = (title) => {
@@ -105,16 +105,16 @@ class CategoryTodos extends React.Component {
       body: JSON.stringify(newTodo),
       };
 
-      fetch(`http://127.0.0.1:3100/categories/${id}/tasks`, options)
+      fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories/${id}/tasks`, options)
       .then(data => {
       if (!data.ok) {
         throw Error(data.status);
        }
        return data.json();
       }).then(() => this.props.getTodoDetails(id))
-      .catch(e => {
-      console.log(e);
-      });
+      // .catch(e => {
+      // console.log(e);
+      // });
 
 
 
@@ -132,7 +132,7 @@ class CategoryTodos extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     const router = this.props.router
     const category_id = router.params.id
     return (

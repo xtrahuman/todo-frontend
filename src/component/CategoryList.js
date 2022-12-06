@@ -7,6 +7,7 @@ class CategoryList extends React.Component {
       <ul>
         {this.props.categories.map((category) => (
           <TodoCategory
+            getCategoryDetails={this.getCategoryDetails}
             key={category.id}
             category={category}
             getCategories= {this.props.getCategories}

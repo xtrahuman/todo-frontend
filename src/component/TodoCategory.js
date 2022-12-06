@@ -10,9 +10,9 @@ class TodoCategory extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    console.log('Cleaning up...');
-  }
+  // componentWillUnmount() {
+  //   console.log('Cleaning up...');
+  // }
 
   updateData = (changedCategory, category_id) => {
     const options = {
@@ -23,16 +23,16 @@ class TodoCategory extends React.Component {
       body: JSON.stringify(changedCategory),
       };
 
-      fetch(`http://127.0.0.1:3100/categories/${category_id}`, options)
+      fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories/${category_id}`, options)
       .then(data => {
       if (!data.ok) {
         throw Error(data.status);
        }
        return data.json();
       }).then(() => this.props.getCategories())
-      .catch(e => {
-      console.log(e);
-      });
+      // .catch(e => {
+      // console.log(e);
+      // });
   }
 
   handleEditing = () => {
@@ -66,7 +66,14 @@ class TodoCategory extends React.Component {
       <li className="item">
         <div onDoubleClick={this.handleEditing}>
           <button onClick={() => this.props.deleteTodoProps(id)}>Delete</button>
-          <Link to={`/categories/${id}/todos`} onClick={() => this.props.getTodoDetails(id)}><span>{name}</span></Link>
+          <Link to={`/categories/${id}/todos`} 
+           onClick={() => {
+            this.props.getTodoDetails(id)
+            this.props.getCategoryDetails(id)
+          }
+          }
+            >
+            <span>{name}</span></Link>
         </div>
         <input
           type="text"

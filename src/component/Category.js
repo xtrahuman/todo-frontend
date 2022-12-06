@@ -1,7 +1,6 @@
 import React from 'react';
 import InputCategory from './InputCategory';
 import CategoryList from './CategoryList'
-import { v4 as uuidv4 } from 'uuid';
 import {
   useLocation,
   useNavigate,
@@ -33,7 +32,7 @@ class Category extends React.Component {
           }
           };
     
-          fetch(`http://127.0.0.1:3100/categories/${id}`, options)
+          fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories/${id}`, options)
           .then(data => {
           if (!data.ok) {
             throw Error(data.status);
@@ -43,9 +42,9 @@ class Category extends React.Component {
           this.getCategories()
           navigate("/")
           })
-          .catch(e => {
-          console.log(e);
-          });
+          // .catch(e => {
+          // console.log(e);
+          // });
 
       };
     
@@ -63,8 +62,8 @@ class Category extends React.Component {
 
     
     getCategories = () => {
-
-      fetch("http://127.0.0.1:3100/categories")
+      // console.log(process.env.REACT_APP_BACKEND_URL_PROD)
+      fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories`)
       .then(response => response.json())
       .then(data => this.setState({ categories: data }));
 
@@ -84,24 +83,25 @@ class Category extends React.Component {
           body: JSON.stringify(newCategory),
           };
     
-          fetch(`http://127.0.0.1:3100/categories`, options)
+          fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/categories`, options)
           .then(data => {
           if (!data.ok) {
             throw Error(data.status);
            }
            return data.json();
           }).then(() => this.getCategories())
-          .catch(e => {
-          console.log(e);
-          });
+    //       .catch(e => {
+    //       console.log(e);
+    //       });
     };
 
     render() {
         return (
           <div className="category_container">
-              <h2 className='text-align-center'>categories</h2>
+              <h2 className='text-align-center' style={{marginTop:"30px"}}>categories</h2>
               <InputCategory addCategory={this.createCategory} />
               <CategoryList 
+                getCategoryDetails={this.getCategoryDetails}
                 getCategories= {this.props.getCategories}
                 getTodoDetails={this.props.getTodoDetails}
                 categories={this.state.categories}

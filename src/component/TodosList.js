@@ -6,8 +6,8 @@ class TodosList extends React.Component {
     return (
       <ul>
         {
-        (this.props.todos && this .props.todos.length) === 0 ?
-        <li className="item text-align-center" >There is no todo list here, kindly add one</li> :
+        (this.props.todos && this.props.todos.length) === 0 ?
+        <li className="item text-align-center">There is no todo list here, kindly add one</li> :
         this.props.todos.map((todo) => (
           <TodoItem
             key={todo.id}

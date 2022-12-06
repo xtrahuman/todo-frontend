@@ -1,7 +1,7 @@
 import React from 'react';
 /* eslint-disable */
-const Header = () => {
-
+const Header = ({categoryName}) => {
+    // console.log(categoryName,'check name')
     const headerStyle = {
       padding: "20px 0",
       lineHeight: "1.5em",
@@ -9,14 +9,15 @@ const Header = () => {
     return (
       <header const={headerStyle}>
         <h1 style={{
-        fontSize: "6rem",
+        fontSize: "2rem",
         fontWeight: "600",
         marginBottom: "2rem",
         lineHeight: "1em",
         color: "#ececec",
         textTransform: "lowercase",
         textAlign: "center",
-      }}>Todo list</h1>
+        marginTop: "0px"
+      }}>Todo list - {categoryName}</h1>
       </header>
     );
 

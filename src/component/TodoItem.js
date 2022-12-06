@@ -9,9 +9,9 @@ class TodoItem extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    console.log('Cleaning up...');
-  }
+  // componentWillUnmount() {
+  //   console.log('Cleaning up...');
+  // }
 
   handleEditing = () => {
     this.setState({
@@ -46,7 +46,7 @@ class TodoItem extends React.Component {
       textDecoration: 'line-through',
     };
     const { completed, id, name } = this.props.todo;
-    console.log(completed, 'todo name')
+    // console.log(completed, 'todo name')
     return (
       <li className="item">
         <div onDoubleClick={this.handleEditing}>
